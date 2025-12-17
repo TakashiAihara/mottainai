@@ -1,0 +1,3 @@
+appId: com.mottainai.app
+env:
+  API_URL: http://localhost:3000

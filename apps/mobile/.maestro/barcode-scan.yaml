@@ -1,0 +1,29 @@
+appId: com.mottainai.app
+---
+- launchApp
+
+# トップページが表示されることを確認
+- assertVisible: "在庫一覧"
+
+# スキャンボタンをタップ
+- tapOn: "スキャン"
+
+# スキャナー画面に遷移したことを確認
+- assertVisible: "バーコードスキャン"
+- assertVisible: "JANコードをスキャンしてください"
+
+# カメラ権限のダイアログが表示される場合は許可
+- runFlow:
+    when:
+      visible: "許可"
+    commands:
+      - tapOn: "許可する"
+
+# 注: 実際のバーコードスキャンはMaestroでは自動化が困難なため、
+# ここではUI要素の表示確認のみを行います
+
+# 戻るボタンで戻る
+- back
+
+# トップページに戻ることを確認
+- assertVisible: "在庫一覧"

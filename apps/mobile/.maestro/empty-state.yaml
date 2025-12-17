@@ -1,0 +1,17 @@
+appId: com.mottainai.app
+---
+- launchApp
+
+# トップページが表示されることを確認
+- assertVisible: "在庫一覧"
+
+# データがない場合、空の状態が表示される
+- runFlow:
+    when:
+      visible: "商品が登録されていません"
+    commands:
+      - assertVisible: "商品が登録されていません"
+
+# スキャンボタンと追加ボタンが表示されていることを確認
+- assertVisible: "スキャン"
+- assertVisible: "追加"

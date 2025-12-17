@@ -1,0 +1,86 @@
+appId: com.mottainai.app
+---
+- launchApp
+
+# トップページが表示されることを確認
+- assertVisible: "在庫一覧"
+
+# 商品追加画面に遷移
+- tapOn: "追加"
+
+# 商品追加画面が表示されることを確認
+- assertVisible: "商品追加"
+
+# 商品情報を入力
+- tapOn: "JANコード *"
+- inputText: "4901234567890"
+
+- tapOn: "商品名 *"
+- inputText: "テスト商品"
+
+- tapOn: "説明"
+- inputText: "これはE2Eテスト用の商品です"
+
+- tapOn: "価格 *"
+- inputText: "1000"
+
+- tapOn: "初期在庫数 *"
+- inputText: "10"
+
+# 登録ボタンをタップ
+- tapOn: "登録"
+
+# 登録成功ダイアログを確認
+- assertVisible: "成功"
+- assertVisible: "商品を登録しました"
+- tapOn: "OK"
+
+# トップページに戻り、新しい商品が表示されることを確認
+- assertVisible: "在庫一覧"
+- assertVisible: "テスト商品"
+- assertVisible: "JAN: 4901234567890"
+
+# 商品詳細画面に遷移
+- tapOn: "テスト商品"
+
+# 商品詳細が表示されることを確認
+- assertVisible: "商品詳細"
+- assertVisible: "テスト商品"
+- assertVisible: "4901234567890"
+- assertVisible: "¥1,000"
+- assertVisible: "10"
+
+# 在庫を追加
+- tapOn:
+    text: "数量"
+- inputText: "5"
+- tapOn: "追加"
+
+# 在庫が増えたことを確認 (10 + 5 = 15)
+- assertVisible: "15"
+
+# 在庫を削減
+- tapOn:
+    text: "数量"
+- clearKeychain
+- inputText: "3"
+- tapOn: "削減"
+
+# 在庫が減ったことを確認 (15 - 3 = 12)
+- assertVisible: "12"
+
+# 削除確認
+- tapOn: "削除"
+- assertVisible: "削除確認"
+- assertVisible: "この商品を削除しますか?"
+
+# キャンセルして戻る
+- tapOn: "キャンセル"
+
+# もう一度削除を試す
+- tapOn: "削除"
+- tapOn: "削除"
+
+# トップページに戻り、商品が削除されたことを確認
+- assertVisible: "在庫一覧"
+- assertNotVisible: "テスト商品"
