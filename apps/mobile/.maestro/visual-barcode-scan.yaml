@@ -1,0 +1,31 @@
+appId: com.mottainai.app
+---
+# Visual Regression Test for Barcode Scanner
+# バーコードスキャナー画面のビジュアルテスト
+
+- launchApp
+
+# 1. トップページ
+- assertVisible: "在庫一覧"
+- takeScreenshot: screenshots/scan-01-home.png
+
+# 2. スキャンボタンをタップ
+- tapOn: "スキャン"
+- assertVisible: "バーコードスキャン"
+
+# 3. カメラ権限ダイアログ（表示される場合）
+- runFlow:
+    when:
+      visible: "許可"
+    commands:
+      - takeScreenshot: screenshots/scan-02-camera-permission.png
+      - tapOn: "許可する"
+
+# 4. スキャナー画面
+- assertVisible: "JANコードをスキャンしてください"
+- takeScreenshot: screenshots/scan-03-scanner-screen.png
+
+# 5. 戻る
+- back
+- assertVisible: "在庫一覧"
+- takeScreenshot: screenshots/scan-04-back-to-home.png

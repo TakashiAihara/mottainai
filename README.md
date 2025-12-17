@@ -9,7 +9,7 @@ React Native + tRPC + Turborepo を使用したモダンな在庫管理アプリ
 - **バックエンド**: Hono + tRPC + Drizzle ORM + SQLite
 - **フロントエンド**: React Native + Expo + React Query
 - **言語**: TypeScript
-- **テスト**: Vitest (バックエンド) + Maestro (モバイル)
+- **テスト**: Vitest (バックエンド) + Maestro (モバイルE2E) + Pixelmatch (ビジュアルリグレッション)
 
 ## プロジェクト構造
 
@@ -129,6 +129,31 @@ maestro test .maestro/item-management.yaml
 - `empty-state.yaml`: 空の状態の確認
 - `barcode-scan.yaml`: バーコードスキャン画面のナビゲーション
 - `item-management.yaml`: 商品の追加、編集、削除
+
+### ビジュアルリグレッションテスト (VRT)
+
+UIの見た目の変更を自動検出するテストです。
+
+```bash
+cd apps/mobile
+
+# 1. 初回: ベースライン画像を作成
+maestro test .maestro/visual-regression.yaml
+pnpm test:vrt:update
+
+# 2. テスト実行: ベースラインと比較
+maestro test .maestro/visual-regression.yaml
+pnpm test:vrt:compare
+
+# 3. 意図した変更の場合: ベースラインを更新
+pnpm test:vrt:update
+```
+
+詳細は [VISUAL_REGRESSION_TESTING.md](apps/mobile/VISUAL_REGRESSION_TESTING.md) を参照してください。
+
+テストフロー:
+- `visual-regression.yaml`: 主要画面のビジュアルテスト（10画面）
+- `visual-barcode-scan.yaml`: バーコードスキャナーのビジュアルテスト
 
 ## 開発コマンド
 

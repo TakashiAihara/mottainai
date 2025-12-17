@@ -1,0 +1,72 @@
+appId: com.mottainai.app
+---
+# Visual Regression Test Flow
+# このフローは主要画面のスクリーンショットを撮影します
+
+- launchApp
+
+# 1. 在庫一覧画面（空の状態）
+- assertVisible: "在庫一覧"
+- takeScreenshot: screenshots/01-inventory-list-empty.png
+
+# 2. 商品追加画面に遷移
+- tapOn: "追加"
+- assertVisible: "商品追加"
+- takeScreenshot: screenshots/02-add-item-form.png
+
+# 3. 商品情報を入力
+- tapOn: "JANコード *"
+- inputText: "4901234567890"
+- tapOn: "商品名 *"
+- inputText: "テスト商品"
+- tapOn: "説明"
+- inputText: "これはビジュアルリグレッションテスト用の商品です"
+- tapOn: "価格 *"
+- inputText: "1000"
+- tapOn: "初期在庫数 *"
+- inputText: "10"
+- takeScreenshot: screenshots/03-add-item-filled.png
+
+# 4. 登録ボタンをタップ
+- tapOn: "登録"
+- assertVisible: "成功"
+- takeScreenshot: screenshots/04-success-dialog.png
+- tapOn: "OK"
+
+# 5. 在庫一覧画面（商品あり）
+- assertVisible: "在庫一覧"
+- assertVisible: "テスト商品"
+- takeScreenshot: screenshots/05-inventory-list-with-item.png
+
+# 6. 商品詳細画面
+- tapOn: "テスト商品"
+- assertVisible: "商品詳細"
+- assertVisible: "テスト商品"
+- takeScreenshot: screenshots/06-item-detail.png
+
+# 7. 在庫数変更（追加後）
+- tapOn:
+    text: "数量"
+- inputText: "5"
+- tapOn: "追加"
+- assertVisible: "15"
+- takeScreenshot: screenshots/07-item-detail-after-add.png
+
+# 8. 在庫数変更（削減後）
+- tapOn:
+    text: "数量"
+- clearKeychain
+- inputText: "3"
+- tapOn: "削減"
+- assertVisible: "12"
+- takeScreenshot: screenshots/08-item-detail-after-subtract.png
+
+# 9. 削除確認ダイアログ
+- tapOn: "削除"
+- assertVisible: "削除確認"
+- takeScreenshot: screenshots/09-delete-confirmation.png
+- tapOn: "削除"
+
+# 10. 削除後の在庫一覧（空）
+- assertVisible: "在庫一覧"
+- takeScreenshot: screenshots/10-inventory-list-after-delete.png
