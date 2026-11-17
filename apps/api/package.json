@@ -25,7 +25,7 @@
     "@trpc/server": "^11.0.0-rc.665",
     "better-sqlite3": "^11.8.1",
     "drizzle-orm": "^0.37.0",
-    "hono": "^4.6.16",
+    "hono": "^4.13.16",
     "zod": "^3.24.1"
   },
   "devDependencies": {
